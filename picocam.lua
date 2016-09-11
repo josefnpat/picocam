@@ -19,22 +19,22 @@ cameralib = {
     return self
   end,
   line = function(self, p1, p2)
-    local px_1 = self:_coordstopx(self._perspective(p1))
-    local px_2 = self:_coordstopx(self._perspective(p2))
+    local px_1 = self:_coordstopx(self:_perspective(p1))
+    local px_2 = self:_coordstopx(self:_perspective(p2))
     line(px_1[1], px_1[2], px_2[1], px_2[2])
   end,
   point = function(self, p)
-    local px = self:_coordstopx(self._perspective(p))
+    local px = self:_coordstopx(self:_perspective(p))
     pset(px[1],px[2])
   end,
-  _perspective = function(p)
+  _perspective = function(self, p)
     local x,y,z = p[1],p[2],p[3]
-    local x_rot = x * cos(camera.theta) - z * sin(camera.theta)
-    local z_rot = x * sin(camera.theta) + z * cos(camera.theta)
+    local x_rot = x * cos(self.theta) - z * sin(self.theta)
+    local z_rot = x * sin(self.theta) + z * cos(self.theta)
     x = x_rot
     z = z_rot
-    local dz = z - camera.z
-    local out_z = camera.z + camera.focallength
+    local dz = z - self.z
+    local out_z = self.z + self.focallength
     local m_xz = x / dz
     local m_yz = y / dz
     local out_x = m_xz * out_z
@@ -51,9 +51,9 @@ cameralib = {
   _coordstopx = function(self,coords)
     local x = coords[1]
     local y = coords[2]
-    local radius = camera.focallength * self._tan(camera.fov / 2 / 360)
-    local pixel_x = self._map(x, -radius, radius, 0, camera.width)
-    local pixel_y = self._map(y, -radius, radius, 0, camera.height)
+    local radius = self.focallength * self._tan(self.fov / 2 / 360)
+    local pixel_x = self._map(x, -radius, radius, 0, self.width)
+    local pixel_y = self._map(y, -radius, radius, 0, self.height)
     return { pixel_x, pixel_y }
   end,
 }
