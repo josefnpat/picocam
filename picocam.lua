@@ -29,13 +29,11 @@ cameralib = {
   end,
   _perspective = function(self, p)
     local x,y,z = p[1],p[2],p[3]
-    local x_rot = x * cos(self.theta) - z * sin(self.theta)
-    local z_rot = x * sin(self.theta) + z * cos(self.theta)
-    x = x_rot
-    z = z_rot
-    local dz = z - self.z
-    local out_z = self.z + self.focallength
-    local m_xz = x / dz
+    local x_rot = x * cos(camera.theta) - z * sin(camera.theta)
+    local z_rot = x * sin(camera.theta) + z * cos(camera.theta)
+    local dz = z_rot - camera.z
+    local out_z = camera.z + camera.focallength
+    local m_xz = x_rot / dz
     local m_yz = y / dz
     local out_x = m_xz * out_z
     local out_y = m_yz * out_z
@@ -55,5 +53,5 @@ cameralib = {
     local pixel_x = self._map(x, -radius, radius, 0, self.width)
     local pixel_y = self._map(y, -radius, radius, 0, self.height)
     return { pixel_x, pixel_y }
-  end,
+  end
 }
