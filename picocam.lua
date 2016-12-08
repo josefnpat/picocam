@@ -1,22 +1,22 @@
 cameralib = {
   new = function(init)
     init = init or {}
-    local self = {}
-    self.z = init.z or -3
-    self.focallength = init.focallength or 5
-    self.fov = init.fov or 45
-    self.theta = init.theta or 0
-    self.width = init.width or 128
-    self.height = init.height or 128
-    -- public
-    self.line = cameralib.line
-    self.point = cameralib.point
-    -- private
-    self._perspective = cameralib._perspective
-    self._tan = cameralib._tan
-    self._coordstopx = cameralib._coordstopx
-    self._map = cameralib._map
-    return self
+    return {
+      z = init.z or -3,
+      focallength = init.focallength or 5,
+      fov = init.fov or 45,
+      theta = init.theta or 0,
+      width = init.width or 128,
+      height = init.height or 128,
+      -- public
+      line = cameralib.line,
+      point = cameralib.point,
+      -- private
+      _perspective = cameralib._perspective,
+      _tan = cameralib._tan,
+      _coordstopx = cameralib._coordstopx,
+      _map = cameralib._map
+    }
   end,
   line = function(self, p1, p2)
     local px_1 = self:_coordstopx(self:_perspective(p1))
